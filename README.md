@@ -73,6 +73,6 @@ node test/check.mjs
 
 They check the syntax of every script, that every file `manifest.json` points to exists, and that the hosts in `sites.js` match `host_permissions` and `content_scripts.matches`.
 
-## License
+## Copyright
 
-[MIT](LICENSE)
+© Ata Turhan. All rights reserved. This repository has no open-source license: its code may not be copied, modified or redistributed.
