@@ -106,4 +106,4 @@ They check the syntax of every script, that every file `manifest.json` points to
 
 ## Copyright
 
-© Ata Turhan. All rights reserved. This repository has no open-source license: its code may not be copied, modified or redistributed.
+© Solarity AI LLC. All rights reserved. This repository has no open-source license: its code may not be copied, modified or redistributed.
