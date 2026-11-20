@@ -1,4 +1,35 @@
-# Enter Key Control for AI Chats
+# Claude Enter Newline
+
+Enter adds a new line, and only Ctrl+Enter (⌘+Enter on Mac) sends, in AI chats: in the Claude desktop app on Windows
+and macOS, and in ChatGPT, Claude, Gemini and other AI chats in Chrome.
+
+| Where | Folder | How |
+| --- | --- | --- |
+| Claude desktop app, Windows | [`windows/`](windows/) | Tray helper, built on your PC with Windows' own C# compiler |
+| Claude desktop app, macOS | [`macos/`](macos/) | LaunchAgent helper, built on your Mac with the Command Line Tools |
+| AI chats in Chrome | [`extension/`](extension/) | Chrome extension (below) |
+
+The Claude desktop app has no setting for this yet
+([anthropics/claude-code#89673](https://github.com/anthropics/claude-code/issues/89673)), and a browser extension
+can't reach it, so the desktop helpers do it at the keyboard level, only while the Claude app is in front.
+
+## Claude desktop app
+
+**Windows:** download or clone this repository, then in PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File windows\install.ps1
+```
+
+**macOS:**
+
+```bash
+sh macos/install.sh
+```
+
+Details, checks and removal: [`windows/README.md`](windows/README.md) and [`macos/README.md`](macos/README.md).
+
+## Chrome extension: Enter Key Control for AI Chats
 
 A Chrome extension that stops AI chat boxes from sending your message every time you press Enter.
 
@@ -8,7 +39,7 @@ A Chrome extension that stops AI chat boxes from sending your message every time
 - Any other Enter combination adds a new line, so only your chosen shortcut can ever send.
 - Typing in Japanese, Chinese or Korean (IME) is left alone while a word is being composed.
 
-## Supported sites
+### Supported sites
 
 | Site | Address |
 | --- | --- |
@@ -24,7 +55,7 @@ A Chrome extension that stops AI chat boxes from sending your message every time
 
 The site list lives in [`extension/sites.js`](extension/sites.js) and the matching `host_permissions` / `content_scripts.matches` in [`extension/manifest.json`](extension/manifest.json).
 
-## Install
+### Install
 
 1. Download `enter-key-control-<version>.zip` from the [latest release](../../releases/latest) and unzip it, or clone this repository.
 2. Open `chrome://extensions` and turn on **Developer mode** (top right).
@@ -32,7 +63,7 @@ The site list lives in [`extension/sites.js`](extension/sites.js) and the matchi
 
 Chat tabs that are already open start working right away; the extension loads itself into them on install and update.
 
-## Popup
+### Popup
 
 Click the toolbar icon to:
 
@@ -43,11 +74,11 @@ Click the toolbar icon to:
 
 Settings are saved with `chrome.storage.sync`, so they follow your Chrome profile.
 
-## Privacy
+### Privacy
 
 Everything runs in the page. The extension makes no network requests, has no analytics and collects no data. It asks only for `storage` (your settings), `scripting` (to load into tabs that were already open) and access to the chat sites listed above.
 
-## How it works
+### How it works
 
 [`extension/content.js`](extension/content.js) listens for `keydown` on the window in the capture phase, before the site's own handlers:
 
@@ -71,7 +102,7 @@ The automatic checks need only Node.js and also run in CI on every push and pull
 node test/check.mjs
 ```
 
-They check the syntax of every script, that every file `manifest.json` points to exists, and that the hosts in `sites.js` match `host_permissions` and `content_scripts.matches`.
+They check the syntax of every script, that every file `manifest.json` points to exists, that the hosts in `sites.js` match `host_permissions` and `content_scripts.matches`, and that the desktop helpers' files are all there. On Windows they also compile `windows/ClaudeEnterNewline.cs` with the installer's own compiler options.
 
 ## Copyright
 
