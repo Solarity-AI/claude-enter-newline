@@ -25,7 +25,8 @@ new line and Ctrl+Enter (Cmd+Enter on macOS) send in Claude and other AI chat ap
 - Adding or removing a site touches 3 places that must agree: `extension/sites.js`, `host_permissions` and
   `content_scripts.matches` in `extension/manifest.json`. `node test/check.mjs` fails when they differ.
 - Do not run `windows/install.ps1`, `macos/install.sh` or the uninstall scripts: they install into the user's session.
-- The repo has no open-source license (see README); keep the copyright line as "Solarity AI LLC".
+- `LICENSE` is the Solarity AI Use License (free use, no redistribution; see README); keep the copyright holder as
+  "Solarity AI LLC".
 
 ## Shipping
 

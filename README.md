@@ -15,7 +15,8 @@ can't reach it, so the desktop helpers do it at the keyboard level, only while t
 
 ## Claude desktop app
 
-**Windows:** download or clone this repository, then in PowerShell:
+**Windows:** download `claude-enter-newline-windows-<version>.zip` from the [latest release](../../releases/latest) and
+unzip it, or clone this repository, then in PowerShell from that folder:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File windows\install.ps1
@@ -104,6 +105,6 @@ node test/check.mjs
 
 They check the syntax of every script, that every file `manifest.json` points to exists, that the hosts in `sites.js` match `host_permissions` and `content_scripts.matches`, and that the desktop helpers' files are all there. On Windows they also compile `windows/ClaudeEnterNewline.cs` with the installer's own compiler options.
 
-## Copyright
+## License
 
-© Solarity AI LLC. All rights reserved. This repository has no open-source license: its code may not be copied, modified or redistributed.
+Free to download and use, personally or inside your organization, under the [Solarity AI Use License](LICENSE). Selling, redistributing or publishing modified versions needs written permission from Solarity AI LLC.
