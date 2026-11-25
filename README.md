@@ -15,7 +15,8 @@ can't reach it, so the desktop helpers do it at the keyboard level, only while t
 
 ## Claude desktop app
 
-**Windows:** download or clone this repository, then in PowerShell:
+**Windows:** download `claude-enter-newline-windows-<version>.zip` from the [latest release](../../releases/latest) and
+unzip it, or clone this repository, then in PowerShell from that folder:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File windows\install.ps1
