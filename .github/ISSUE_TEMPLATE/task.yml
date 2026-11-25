@@ -1,0 +1,30 @@
+name: Task or bug
+description: A piece of work or a bug, for example a site where Enter misbehaves. Title starts with a verb.
+title: "Fix "
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What and why
+      description: For a site bug, the URL, the editor type and what Enter or the send shortcut did.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: 1 line per condition that must hold when this is done.
+      placeholder: |
+        - Enter inserts a new line in the composer on example.com.
+        - Ctrl+Enter sends.
+    validations:
+      required: true
+  - type: textarea
+    id: verify
+    attributes:
+      label: How to verify
+      description: The command to run and its result, or the manual steps and what you should see.
+      placeholder: |
+        node test/check.mjs  ->  OK
+    validations:
+      required: true
