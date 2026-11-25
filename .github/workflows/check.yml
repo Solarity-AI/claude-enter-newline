@@ -1,5 +1,6 @@
 # Static checks (node test/check.mjs) on every pull request that touches code. Org rules: pull_request and
-# workflow_dispatch only (no push, no schedule), on the org's self-hosted Linux runners.
+# workflow_dispatch only (no push, no schedule). Hosted runner on purpose: this repo is public, the org's self-hosted
+# runners do not take public-repo jobs, and fork pull requests must not run on owner machines.
 name: check
 
 on:
@@ -18,7 +19,7 @@ concurrency:
 
 jobs:
   check:
-    runs-on: [self-hosted, solarity, docker]
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
