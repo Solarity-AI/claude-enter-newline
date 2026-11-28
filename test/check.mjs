@@ -51,6 +51,25 @@ for (const [name, list] of Object.entries(lists)) {
   if (extra.length) errors.push(`${name} has ${extra.join(", ")}, which sites.js doesn't list`);
 }
 
+// Files popup.html loads (scripts, stylesheet, icon) exist, so a rename can't leave a blank or broken popup.
+const popupHtml = readFileSync(join(ext, "popup.html"), "utf8");
+for (const [, ref] of popupHtml.matchAll(/(?:src|href)="([^"#?:]+)"/g)) {
+  if (!existsSync(join(ext, ref))) errors.push(`popup.html references missing file ${ref}`);
+}
+
+// The README's "Supported sites" table lists exactly the sites and hosts in sites.js.
+const readme = readFileSync(join(root, "README.md"), "utf8");
+const tableStart = readme.indexOf("### Supported sites");
+const tableEnd = readme.indexOf("\n###", tableStart + 1);
+const tableText = tableStart < 0 ? "" : readme.slice(tableStart, tableEnd < 0 ? undefined : tableEnd);
+const readmeRows = tableText.split("\n").filter((l) => l.startsWith("|") && !/^\|\s*(Site|-)/.test(l))
+  .map((l) => l.split("|").slice(1, 3).map((c) => c.trim()));
+const wantRows = sandbox.self.EKC.SITES.map((s) => `${s.name} = ${s.hosts.join(", ")}`).sort();
+const haveRows = readmeRows.map(([name, hosts]) => `${name} = ${hosts}`).sort();
+if (JSON.stringify(wantRows) !== JSON.stringify(haveRows)) {
+  errors.push(`README.md "Supported sites" table differs from sites.js\n  sites.js: ${wantRows.join("; ")}\n  README:   ${haveRows.join("; ")}`);
+}
+
 // The desktop helpers: every file the READMEs and installers rely on is there.
 const helperFiles = [
   "windows/ClaudeEnterNewline.cs", "windows/install.ps1", "windows/uninstall.ps1", "windows/README.md",
