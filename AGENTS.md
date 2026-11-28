@@ -9,7 +9,8 @@ new line and Ctrl+Enter (Cmd+Enter on macOS) send in Claude and other AI chat ap
 
 - `node test/check.mjs`: static checks, no dependencies. Parses every script, checks every file `manifest.json` points to
   exists, checks the host lists agree, checks the desktop helpers are complete, and on Windows compiles
-  `windows/ClaudeEnterNewline.cs` with the installer's compiler options. Node 24 (CI).
+  `windows/ClaudeEnterNewline.cs` with the installer's compiler options. Node 24 (CI). Off Windows the C# compile step is skipped and `macos/ClaudeEnterNewline.m` is never compiled, so those 2
+  files need extra care.
 - Key behaviour needs real key presses (synthetic events are ignored by design): serve the repo root with
   `python -m http.server 8765` and open `test/harness.html` and `test/popup-harness.html?url=https://claude.ai/`.
 
@@ -24,6 +25,9 @@ new line and Ctrl+Enter (Cmd+Enter on macOS) send in Claude and other AI chat ap
 
 - Adding or removing a site touches 3 places that must agree: `extension/sites.js`, `host_permissions` and
   `content_scripts.matches` in `extension/manifest.json`. `node test/check.mjs` fails when they differ.
+- In `windows/ClaudeEnterNewline.cs`, the keyboard hook callback (`Hook`) must stay a flag read: no process lookups inside
+  it, and the periodic re-hook timer stays, or Windows silently drops the hook (see `windows/README.md`).
+  `node test/check.mjs` fails on both.
 - Do not run `windows/install.ps1`, `macos/install.sh` or the uninstall scripts: they install into the user's session.
 - `LICENSE` is the Solarity AI Use License (free use, no redistribution; see README); keep the copyright holder as
   "Solarity AI LLC".
